@@ -197,6 +197,80 @@ void concurencyFunc(Data &&d);
 std::thread t(concurencyFunc, std::ref(d));
 ``` 
 
+## 移交线程的归属权
+>每一个 `std::thread` 对象都关联着一个线程, 在有些情况下，我们需要在不同的 `std::thread` 对象中转移这些线程。
 
+对于 `C++` 来说，存在这一些只可以复制不可以移动的类型，比如 `std::unique_ptr<>` 那么 `std::thread` 也是不可复制，只可以移动的，所以，在进行归属权转移的时候需要使用 `std::move()` 来执行移动语义。
+
+```cpp
+
+#include <algorithm>
+#include <chrono>
+#include <cmath>
+#include <functional>
+#include <iostream>
+#include <stdlib.h>
+#include <thread>
+int func1() {
+  std::cout << "func\n";
+
+  return rand();
+}
+
+int func2() {
+  std::cout << "func2\n";
+
+  return rand();
+}
+
+int func3() {
+  std::cout << "func3\n";
+
+  return rand();
+}
+
+int main() {
+  std::thread t1(func1);
+
+  std::thread t2(func2);
+
+  std::thread t3 = std::move(t2);
+
+  t1 = std::move(t3); // std::terminate() 被调用
+
+  t1.join();
+  t2.join();
+
+  return 0;
+}
+```
+以上就是不同 `std::thread` 对象之间的转移，但是有一点需要注意的就是
+
+`t1 = std::move(t3); // std::terminate() 被调用`
+ 
+ 这一行代码会因为 `t1` 已经关联了一个正在运行的线程，如果这个时候把 `t3` 关联的线程转移给他，他就会调用 `std::terminate()` 
+ 
+ ![运行结果](image/getting-started/1662892940728.png)
+
+
+
+## 其他
+### 获取硬件所支持的并发数
+可以使用 ` std::thread::hardware_concurrency()` 来获取可以真正并发的数量，对于目前的多核 `CPU` 来说，一般是其物理核心数。
+### 识别线程
+使用 `std::this_thread::get_id()` 来获取一个线程为识别特征，其返回类型是 `std::thread::id`类型
+
+```cpp
+#include <iostream>
+#include <thread>
+int main() {
+
+  std::cout << std::thread::hardware_concurrency() << std::endl;
+  std::thread::id id = std::this_thread::get_id();
+  std::cout << id << std::endl;
+
+  return 0;
+}
+```
 
 
