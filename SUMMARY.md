@@ -10,5 +10,5 @@
 ## 现代C++
 
 * [并发编程](./ModenCPP/introduction.md)
-    *[并发编程初探](./ModenCPP/getting-started.md)
+   * [并发编程初探](./ModenCPP/getting-started.md)
 * [新特性](./ModenCPP/new-futures.md)
