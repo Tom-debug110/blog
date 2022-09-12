@@ -144,6 +144,7 @@ void foo() {
 }
 ```
 对于以上代码， `processData()` 成员虽然在内部使用了互斥来保护数据，但是在 `foo()` 内部 `unprotected->doSomeThing();` 互斥无能为力，在多线程的情况下，可能会产生一些意外的情况发生。
+
 ---
 
 ### 发现接口固有的条件竞争
@@ -183,6 +184,8 @@ int main() {
 ||`s.pop()`|
 |`doSomething()`||
 ||`doSomething()`|
+____
+
 
 
 
