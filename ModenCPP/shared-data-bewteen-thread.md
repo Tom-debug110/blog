@@ -184,10 +184,10 @@ int main() {
 ||`s.pop()`|
 |`doSomething()`||
 ||`doSomething()`|
-____
 
 
 
+----
 
 
 
