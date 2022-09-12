@@ -221,6 +221,8 @@ int main(){
 以上就是编译的大概过程了，如有错误，还请指正
 
 ## gcc/g++ 常用参数
+> 更新中...
+[基本指令](https://www.runoob.com/w3cnote/gcc-parameter-detail.html)
 
 ## 参考博文
 
