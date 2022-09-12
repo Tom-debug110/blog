@@ -102,7 +102,89 @@ void increase() {
 ```
 ### 组织和编排代码以保护贡献数据
 
-虽然上述工具已经解决了大部分问题，但是
+虽然上述工具已经解决了大部分问题，但是还是存在一些问题，比如下面的代码
+```cpp
+#include <iostream>
+#include <mutex>
+#include <stdlib.h>
+#include <string>
+#include <thread>
+#include <vector>
+
+class SomeData {
+  int a;
+  std::string b;
+
+public:
+  void doSomeThing();
+};
+
+class DataWrapper {
+private:
+  SomeData data;
+  std::mutex mu;
+
+public:
+  template <typename Function> void processData(Function func) {
+    std::lock_guard<std::mutex> guard(this->mu);
+    func(data);
+  }
+};
+
+SomeData *unprotected;
+void maliciousFunction(SomeData &protedtedData) {
+  unprotected = &protedtedData;
+}
+
+DataWrapper x;
+
+void foo() {
+  x.processData(maliciousFunction);
+  unprotected->doSomeThing();
+}
+```
+对于以上代码， `processData()` 成员虽然在内部使用了互斥来保护数据，但是在 `foo()` 内部 `unprotected->doSomeThing();` 互斥无能为力，在多线程的情况下，可能会产生一些意外的情况发生。
+---
+
+### 发现接口固有的条件竞争
+直接看下面的例子
+
+```cpp
+#include <iostream>
+#include <stack>
+#include <thread>
+
+void doSomething(int value) {}
+int main() {
+  std::stack<int> s;
+
+  if (!s.empty()) { // 1
+
+    const int value = s.top(); // 2
+    s.pop();                   // 3
+    doSomething(value);
+  }
+
+  return 0;
+}
+```
+
+对于多线程的程序来说，可能存在的问题在于  `1` 和 `2` 之间的部分，假如一个线程已经判断栈非空，要进入 `if` 里面的语句执行，但是另外一个线程恰好在其执行到 `1` 和 `2` 之间的时候执行了 `pop()` 操作，而且执行之后栈为空,那么第一个线程在执行后面的语句的时候就会发生错误。
+
+下面给出两个线程可能的执行次序
+
+| 线程甲|线程乙|
+|:-:|:-:|
+|`if(s.empty())`||    
+| |`if(s.empty())`|
+|`const int value=s.top()` ||
+||`const int value=s.top()` |
+|`s.pop()`||
+||`s.pop()`|
+|`doSomething()`||
+||`doSomething()`|
+
+
 
 
 
