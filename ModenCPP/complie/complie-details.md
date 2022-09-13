@@ -201,12 +201,12 @@ int main(){
 
 使用命令行生成对应的 `.o`文件
 
-![1662984031823](image/complie-details/1662984031823.png)
+![文件列表](image/complie-details/1662984031823.png)
 
 > 注意一定要加 `-c` 选项，表明只执行预处理，编译和汇编，即生成可链接可执行文件 (`Linux` 是 `.o` 后缀，`Windows` 平台是 `obj`后缀)
 
 错误示范
-![1662984201427](image/complie-details/1662984201427.png)
+![错误示范](image/complie-details/1662984201427.png)
 
 ---
 经过以上步骤，终于得到了我们的两个 `add.o` 和 `main.o` 可链接可执行
@@ -214,12 +214,12 @@ int main(){
 
 如果我们这个时候单独运行 `main.o` 会怎么样？
 
-![1662984407402](image/complie-details/1662984407402.png)
+![单独运行未链接文件](image/complie-details/1662984407402.png)
 
 
 我们执行链接后生成最终的可执行文件
 
-![1662984480692](image/complie-details/1662984480692.png)
+![成功执行](image/complie-details/1662984480692.png)
 
 ----
 
