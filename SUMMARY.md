@@ -15,3 +15,7 @@
    * [2.2 在线程间共享数据](./ModenCPP/shared-data-bewteen-thread.md)
    * [2.3 并发操作的同步](./ModenCPP/concurrency/sync-between-thread.md)
 * [新特性](./ModenCPP/new-futures.md)
+
+## Rust 学习笔记
+
+* [一、猜数游戏](./Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gusses-game.md)

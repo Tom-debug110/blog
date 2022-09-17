@@ -214,4 +214,89 @@ int main() {
 ```
 
 ## 等待时间期限
+### 时长类
+`std::chrono::duration<>` 接受两个模板参数，第一个是参数表示使用何种类型计数计时单元是数量，可以采用 `int` `long` `double` 等类型。最后一个参数表示一个计时单元代表多少秒，因为这些计时单位都是按照秒来计算的，比如一个小时的时长可以表示为
+`std::chrono::duration<int,std::ratio<3600,1>>` 其中 `int` 类型也可以使用 `long long` 或者 `double` 类型来表示。不仅仅可以用来表示小时，还可以表示微妙和毫秒这些
+如
+```cpp
+  std::chrono::duration<int, std::ratio<1000, 1>> milli;
+  std::chrono::duration<int, std::ratio<1000000, 1>> nona;
+```
+
+实际上，标准库里面已经给出了一组 `tpedef` 预设的定义:
+
+|定义|含义|
+|:-:|:-:|
+|`nanoseconds`| 纳秒|
+|`mircroseconds`| 微秒| 
+|`milliseconds`| 毫秒 |
+|`seconds`| 秒 |
+|`minutes`| 分钟 |
+|`hours`| 小时|
+
+
+> 以上的定义都包含在 `std::chrono`  `namespace` 中
+
+同时由于各种  `duration` 不同，标准库还提供了一个 `duration_cast<>`
+
+
+
+```cpp
+std::chrono::duration<int> seconds(3600); //3600 秒，第二个参数默认是 1
+  std::chrono::duration<int, std::ratio<3600, 1>>// 一小时是 3600 秒
+  hours = std::chrono::duration_cast<std::chrono::duration<int, std::ratio<3600, 1>>>(seconds);
+
+  std::cout << hours << std::endl;
+
+```
+> 这样转换是OK 的
+
+最后输出 `1h` 
+
+下面这样也是 OK 的
+
+```cpp
+std::chrono::duration<int> seconds(3600); //3600 秒，第二个参数默认是 1
+  std::chrono::duration<int, std::ratio<3600, 1>>// 一小时是 3600 秒
+  hours = std::chrono::duration_cast<std::chrono::hours>(seconds);
+```
+
+> 邪了门了，当时我自己在实验的时候，是不成功的，`3600s` 会变成 `3600h`,本来以为是因为  `gcc12` 和 `MSVC` 不同造成的差异，都又重新试了试之后，发现又好了，这就很奇怪啦
+
+
+最后补充两点就是:
+
+1. 计时单元都有一个  `count()` 成员函数，返回计时单元的数量，其实也就是，比如 `3h` 就是  `3` ，`45minutes` 就是 `45` 
+2. 在 `C++14 以上版本`，可以使用 `std::chrono_literals`,最终导致就是可以直接使用 `auto m=45min` 这样的表达式来表示不同时长。
+
+---
+
+
+### 时间点类
+
+`std::chrono::time_point<>`
+
+```cpp
+#include <iostream>
+#include <ratio>
+#include <chrono>
+#include <thread>
+using namespace std::chrono_literals;
+int main() {
+  std::chrono::time_point<std::chrono::steady_clock> start = std::chrono::steady_clock::now();
+
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+
+  std::chrono::time_point<std::chrono::steady_clock> stop = std::chrono::steady_clock::now();
+
+  std::cout << std::chrono::duration_cast<std::chrono::seconds>(stop - start) << std::endl;
+
+  // 以毫秒形式输出
+  std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(stop - start) << std::endl;
+
+  return 0;
+}
+```
+以上代码可以算是一个简单的统计成员运行时间的demo，可以根据要求的时间精度，改变 `duration_cast<>` 里面的参数
+
 ## 运用同步操作简化代码
