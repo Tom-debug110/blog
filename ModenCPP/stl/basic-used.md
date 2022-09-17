@@ -239,5 +239,66 @@ If the new size() is greater than capacity(), all iterators and references are i
 交换两个容器的内容，没记错的话，是指针直接交换，减少拷贝和复制的开销，但实际上我们经常用来释放全部或者部分容器的内存
 
 
+---
+## `std::string`
+[std::string](https://en.cppreference.com/w/cpp/string/basic_string/assign)
+#### 1. `assign()`
+> 和 `std::vector<>` 异曲同工，只不过了一个被赋值的参数，也是存在多种重载
 
+* 直接从一个已经存在的 `std::string` 中进行赋值操作
+`constexpr basic_string& assign( const basic_string& str );`
+* 指定被赋值字符串的开始位置个从开始位置需要赋值多少个字符
+`basic_string& assign( const basic_string& str,size_type pos, size_type count = npos);`
+
+* 支持传入 `C` 风格字符串
+`constexpr basic_string& assign( const CharT* s );`
+* 使用迭代器
+`template< class InputIt >constexpr basic_string& assign( InputIt first, InputIt last );`
+* 支持使用初始化列表
+`constexpr basic_string& assign( std::initializer_list<CharT> ilist );`
+#### 2. `get_allocator()`
+#### 3. `at()`
+#### 4. `operator[]`
+#### 5. `front()`
+#### 6. `back()`
+#### 7. `data()`
+#### 8. `c_str()`
+#### 9. `begin()` 和 `cbegin()`
+#### 10. `end()`和 `cend()`
+#### 11 `empty()`
+#### 12. `size()` 和 `length()`
+#### 13. `max_size()`
+#### 14. `reserve()`
+#### 15. `capacity()`
+#### 16. `clear()`
+#### 17. `insert()`
+> 主要是插入相关的操作,对于字符串处理来说还是比较经常使用的操作
+
+* 在指定位置(索引)上插入若干个给定字符
+`constexpr basic_string& insert( size_type index, size_type count, CharT ch );`
+* 在指定位置插入一个`\0` 结尾的字符
+`constexpr basic_string& insert( size_type index, const CharT* s );`
+* 在指定位置插入给定字符串的子串
+`constexpr basic_string& insert( size_type index,const CharT* s, size_type count );`
+也就是插入 `s[0..count)` 字串
+* 在指定位置插入一个字串
+`constexpr basic_string& insert( size_type index, const basic_string& str );`
+
+* 在指定位置插入一个字符，该位置使用迭代器指定
+`constexpr iterator insert( const_iterator pos, CharT ch );`
+
+* 在指定位置插入指定数量的字符
+`constexpr iterator insert( const_iterator pos, size_type count, CharT ch );`
+
+* 插入迭代器范围指定的序列
+`template< class InputIt >constexpr iterator insert( const_iterator pos, InputIt first, InputIt last );`
+
+* 插入初始化列表指定的序列
+
+`constexpr iterator insert( const_iterator pos,std::initializer_list<CharT> ilist );`
+
+> 不管是使用迭代器还是初始化列表，其插入位置都是使用迭代器来指定的
+
+> 关于 `std::string_view<>` 暂时不讨论
+ 
 
