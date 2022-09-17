@@ -300,5 +300,35 @@ If the new size() is greater than capacity(), all iterators and references are i
 > 不管是使用迭代器还是初始化列表，其插入位置都是使用迭代器来指定的
 
 > 关于 `std::string_view<>` 暂时不讨论
+```cpp
+std::string s{"hello"};
+  std::string s2{"world"};
+
+  // 在下标为 0 的位置插入一个字符  'a'
+  s2.insert(0, 1, 'a');
+  fmt::println(s2);
+
+  // 在下标为 1 的位置插入一个 C 风格字符串
+  s2.insert(1, "haha\0");
+  fmt::println(s2);
+
+  // 在下标为 2 的位置插入一个 C 风格字符串的前7个字符
+  s2.insert(2, "C-style string\0", 7);
+  fmt::println(s2);
+
+  // 在下标为 0 的位置插入一个 std::basic_string(string)
+  s2.insert(0, s);
+  fmt::println(s2);
+
+  // 在下标为 0 的位置插入一个 std::string 的子串
+  // 字串为从下标为 3 开始(含)的2个字符组成的
+  s2.insert(0, s, 3, 2);
+  fmt::println(s2);
+
+  // 使用迭代器和初始化列表
+  s2.insert(s2.begin(), s.cbegin(), s.cend());
+  s2.insert(s2.begin(), std::initializer_list<char>{'a', 'b', 'c'}); //真没必要
+  fmt::println(s2);
+```
  
 
