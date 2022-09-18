@@ -330,5 +330,37 @@ std::string s{"hello"};
   s2.insert(s2.begin(), std::initializer_list<char>{'a', 'b', 'c'}); //真没必要
   fmt::println(s2);
 ```
+
+> 关于 `reserve()` 的用法比较复杂，在实验过程中，还发现,在 `reserve()` 里面的参数大于当前的 `capacity()` 的时候，也就是真正执行扩容的时候，会调用元素的 **拷贝函数**
+
+##### 18. erase()
+> 擦除指定位置的元素，大概用法和 `std::vector<>` 相同
+#### 19. push_back() 和 append()
+> 在字符串末尾追加字符串
+#### 20. pop_back()
+> 移除最后一个元素
+
+#### 21. compare() 
+> C++20 以后支持比较两个字符串的字串，相比于直接使用 `>` `<` `=`  `compare()` 函数提供了更加灵活的比较字串的操作
+
+#### 22. replace()
+> replace的重载也是比较多的，主要是提供了替换字符串部分子序列的方法，总的原则是:Replaces the part of the string indicated by either [pos, pos + count) or [first, last) with a new string.
+
+* 使用一个 `std::string` 来替换给定区间字符串
+`constexpr basic_string& replace( size_type pos, size_type count,const basic_string& str );`
+* 使用一个 `std::string` 替换由迭代器指定的区间
+`constexpr basic_string& replace( const_iterator first, const_iterator last,const basic_string& str );`
+* 使用给定的 `std::string` 的字串来替换迭代器指定的区间
+`basic_string& replace( size_type pos, size_type count,const basic_string& str,size_type pos2, size_type count2 );`
+但是这个有一个问题就是，如果给定的区间不够怎么办，给定的替换序列小于替换区间怎么办？经过实验会发现，到底替换多少字符是根据后面的参数决定的
+* 使用迭代器指定替换区间和被替换区间
+`template< class InputIt >constexpr basic_string& replace( const_iterator first, const_iterator last InputIt first2, InputIt last2 );`
+* 使用指定数量的字符替换迭代器区间
+`constexpr basic_string& replace( const_iterator first, const_iterator last, size_type count2, CharT ch );`
+* 
+
+
+
+
  
 
