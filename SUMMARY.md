@@ -20,13 +20,15 @@
 * [四、STL](./ModenCPP/stl/basic-used.md)
 
 ## 计算机网络
-* [一、思科模拟器]
+* [一、思科模拟器]()
    * [1.1简单使用](./NetWork/cisco/basic.md)
+   * [1.2访问Web服务器](./NetWork/cisco/basic.md)
 
 ## 操作系统
 
-* [一、代码示例]
+* [一、代码示例]()
    * [创建进程](./OperatingSystem/code/create-child-process.md)
+   * [进程间通信](./OperatingSystem/code/create-child-process.md)
 ## Rust 学习笔记
 
 * [一、猜数游戏](./Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gusses-game.md)
