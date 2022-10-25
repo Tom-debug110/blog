@@ -6,7 +6,7 @@
 
 * [树](./Algorithim/tree.md)
 * [链表](./Algorithim/list.md)
-* [刷题笔记]
+* [刷题笔记](./Algorithim/solution/introduction.md)
    * [demo](./Algorithim/solution/demo.md)
 
 ## 现代C++
