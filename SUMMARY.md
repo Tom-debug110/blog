@@ -26,10 +26,12 @@
 * [Socket编程](./NetWork/socket%E7%BC%96%E7%A8%8B/socket.md)
 
 ## 操作系统
-
 * [一、代码示例]()
    * [创建进程](./OperatingSystem/code/create-child-process.md)
    * [进程间通信](./OperatingSystem/code/create-child-process.md)
+
+## Shell 编程
+* [经典Shell脚本](./Shell/basic.md)
 ## Rust 学习笔记
 
 * [一、猜数游戏](./Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gusses-game.md)
