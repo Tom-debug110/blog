@@ -5,6 +5,7 @@
 ## 算法
 
 * [树](./Algorithim/tree.md)
+* [哈夫曼编码](./Algorithim/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81.md)
 * [链表](./Algorithim/list.md)
 * [ 刷题笔记 ](./Algorithim/solution/introduction.md)
    * [demo](./Algorithim/solution/demo.md)
