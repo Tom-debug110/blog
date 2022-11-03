@@ -27,6 +27,7 @@
    * [1.3交换机的自学习](./NetWork/cisco/%E4%BA%A4%E6%8D%A2%E6%9C%BA%E8%87%AA%E5%AD%A6%E4%B9%A0.md)
    * [1.4生成树协议STP](./NetWork/cisco/STP/stp.md)
    * [1.5虚拟局域网](./NetWork/cisco/vlan/vlan.md)
+   * [1.6IP地址-分类地址](./NetWork/cisco/ip%E5%9C%B0%E5%9D%80-%E5%88%86%E7%B1%BB/ip.md)
 * [Socket编程](./NetWork/socket%E7%BC%96%E7%A8%8B/socket.md)
 
 ## 操作系统
