@@ -37,6 +37,8 @@
 
 ## Shell 编程
 * [经典Shell脚本](./Shell/basic.md)
-## Rust 学习笔记
 
+## 数字图像处
+* [一、基础部分](./DigitalImage/01/1简单使用)
+## Rust 学习笔记
 * [一、猜数游戏](./Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/gusses-game.md)
