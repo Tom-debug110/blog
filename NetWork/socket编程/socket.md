@@ -182,3 +182,87 @@ int main(int argc, char **argv) {
 }
 
 ```
+## 三、客户端代码
+
+相对来说，客户端的步骤和代码都要简单不少。但是也是有一些共性的地方
+
+### 3.1 创建套接字
+
+
+```cpp
+if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    printf("create socket error: %s(errno: %d)\n", strerror(errno), errno);
+    exit(0);
+  }
+```
+
+### 3.2 连接服务端
+直接调用 `connect()` 函数即可，但是在调用之前要先创建服务端的套接字地址，和服务端那边同样的数据类型
+
+```cpp
+servaddr.sin_family = AF_INET;
+  servaddr.sin_port = htons(6666);
+  if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0) {
+    printf("inet_pton error for %s\n", argv[1]);
+    exit(0);
+  }
+```
+> 上面是根据传进来的命令行参数进行转换，再赋值给 `servaddr.sin_addr` 成员
+
+### 3.3 发送数据
+
+```cpp
+if (send(sockfd, sendline, strlen(sendline), 0) < 0) {
+    printf("send msg error: %s(errno: %d)\n", strerror(errno), errno);
+    exit(0);
+  }
+```
+
+
+### 3.4 全部代码
+
+```cpp
+
+
+#include <arpa/inet.h>
+#include <errno.h>
+#include <netinet/in.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#define MAXLINE 4096
+int main(int argc, char **argv) {
+  int sockfd, n;
+  char recvline[4096], sendline[4096];
+  struct sockaddr_in servaddr;
+  if (argc != 2) {
+    printf("usage: ./client <ipaddress>\n");
+    exit(0);
+  }
+  if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+    printf("create socket error: %s(errno: %d)\n", strerror(errno), errno);
+    exit(0);
+  }
+  memset(&servaddr, 0, sizeof(servaddr));
+  servaddr.sin_family = AF_INET;
+  servaddr.sin_port = htons(6666);
+  if (inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0) {
+    printf("inet_pton error for %s\n", argv[1]);
+    exit(0);
+  }
+  if (connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
+    printf("connect error: %s(errno: %d)\n", strerror(errno), errno);
+    exit(0);
+  }
+  printf("send msg to server: \n");
+  fgets(sendline, 4096, stdin);
+  if (send(sockfd, sendline, strlen(sendline), 0) < 0) {
+    printf("send msg error: %s(errno: %d)\n", strerror(errno), errno);
+    exit(0);
+  }
+  close(sockfd);
+  exit(0);
+}
+```
