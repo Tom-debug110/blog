@@ -54,6 +54,7 @@
 ## 数字图像处
 * [一、基础部分](./DigitalImage/01/1简单使用)
 * [二、彩色图像](./DigitalImage/02/02.md)
+* [三、空间滤波](./DigitalImage/03/03.md)
 
 
 ## Rust 学习笔记
